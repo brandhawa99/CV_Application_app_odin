@@ -25,6 +25,7 @@ class Education extends Component{
     }
 
     checkCurrentlyEnrolled = (e) =>{
+        console.log(e);
         this.setState({ currentlyEnrolled: e.target.checked})
     }
 
@@ -36,12 +37,14 @@ class Education extends Component{
         return (
             <div>
                 <h3>{this.state.school}</h3>
-                <p>
-                    {this.state.program}
+                <div>
+                    <strong>
+                        {this.state.program}
+                    </strong>
                     
                     {!this.state.currentlyEnrolled && 
                     <p> 
-                        {this.state.startDate} -
+                        {this.state.startDate} --
                         {this.state.endDate} 
                     </p> 
                     }
@@ -51,7 +54,7 @@ class Education extends Component{
                         - Current 
                     </p> 
                     }
-                </p>
+                </div>
                     {this.state.currentlyEnrolled} 
                 <button onClick={this.setSubmit}>Edit</button>
             </div>
@@ -63,7 +66,7 @@ class Education extends Component{
         const {school, program,startDate,endDate, currentlyEnrolled} = this.state
 
         return(
-            <form onSubmit={this.setSubmit}>
+            <form key={'thisisapassword'}onSubmit={this.setSubmit}>
                 <label>
                     School: 
                     <input
@@ -113,6 +116,7 @@ class Education extends Component{
                 <label>
                 Currently Enrolled
                 <input
+                key={'thisistheKEYKEYKEY'}
                 name='currentlyEnrolled'
                 type="checkbox"
                 onChange={this.checkCurrentlyEnrolled}
