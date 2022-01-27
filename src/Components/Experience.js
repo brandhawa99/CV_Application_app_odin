@@ -11,18 +11,6 @@ class Experience extends Component {
         super(props)
         this.state = {
             experiences:[
-            {
-                id:uniqid(),
-                company :{text:'',id:uniqid()},
-                position: {text:'',id:uniqid()},
-                tasks:{text:'',id:uniqid()},
-                startDate:{text:'',id:uniqid()},
-                endDate:{text:'',id:uniqid()},
-                current:{text:'',id:uniqid()},
-                submitted: false,
-            },
-
-
             ]
 
         }
@@ -69,6 +57,7 @@ class Experience extends Component {
     }
 
     setSubmit = (e) =>{
+
         e.preventDefault();
         let filtered = this.state.experiences.filter(experience =>{
             if(experience.id === e.target.name){
@@ -82,6 +71,7 @@ class Experience extends Component {
         this.setState({
             experiences : filtered,
         })
+        console.log(this.state)
     }
 
 
@@ -115,7 +105,7 @@ class Experience extends Component {
                 this.state.experiences.map(experience =>{
                     if(experience.submitted === false){
                         return(
-                            <form key={experience.id+1} onSubmit={this.setSubmit}>
+                            <form key={experience.id+1} name={experience.id}onSubmit={this.setSubmit}>
                                 <label key={experience.company.id+2}>Company <input onChange={this.handleChange} name={'company'} key={experience.company.id} id={experience.company.id} value={experience.company.text} type={'text'} required></input></label>
                                 <label key={experience.position.id+2}>Positon <input onChange={this.handleChange} name={'position'} key={experience.position.id} id={experience.position.id} value={experience.position.text} type={'text'}required></input></label>
                                 <label key={experience.tasks.id+2}>Main Tasks <input onChange={this.handleChange} name={'tasks'} key={experience.tasks.id} id={experience.tasks.id} value={experience.tasks.text} type={'text'}required></input></label>
