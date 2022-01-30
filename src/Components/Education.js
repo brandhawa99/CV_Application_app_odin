@@ -1,72 +1,75 @@
-import React, { Component } from 'react';
+import React, { useState} from 'react';
 import CompHeader from '../Components/CompHeader'
 
 
-class Education extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            school: '',
-            program:'',
-            startDate: '',
-            endDate:'',
-            currentlyEnrolled:false,
-            hasSubmited:false, 
+const  Education = (props) =>{
+    const [school, setSchool] = useState('')
+    const [program, setProgram] = useState('')
+    const [startDate, setStartDate] = useState('')
+    const [endDate, setEndDate] = useState('')
+    const [enrolled, setEnrolled] = useState(false)
+    const [submit, setSubmit] = useState(false)
 
+    const handleChange = (e) =>{
+        e.preventDefault();
+        let value = e.target.name; 
+
+        if(value === 'school'){
+            setSchool(e.target.value)
+        }
+        if(value === 'program'){
+            setProgram(e.target.value)
+        }
+        if(value === 'startDate'){
+            setStartDate(e.target.value)
+        }
+        if(value === 'endDate'){
+            setEndDate(e.target.value)
         }
     }
 
-    handleChange = (e) =>{
+    const checkCurrentlyEnrolled = (e) =>{
         e.preventDefault();
-        let value = e.target.name; 
-        this.setState({
-            [value] : e.target.value
-        })
+        setEnrolled(!e.target.checked)
     }
 
-    checkCurrentlyEnrolled = (e) =>{
-        console.log(e);
-        this.setState({ currentlyEnrolled: e.target.checked})
-    }
-
-    setSubmit = (e) =>{
+    const upDateSubmit = (e) =>{
         e.preventDefault();
-        this.setState({hasSubmited: !this.state.hasSubmited})
+        setSubmit(!submit);
     }
-    createCV = () =>{
+    const createCV = () =>{
         return (
             <div>
-                <h3>{this.state.school}</h3>
+                <h3>{school}</h3>
                 <div>
                     <strong>
-                        {this.state.program}
+                        {program}
                     </strong>
                     
-                    {!this.state.currentlyEnrolled && 
+                    {!enrolled && 
                     <p> 
-                        {this.state.startDate} --
-                        {this.state.endDate} 
+                        {startDate} --
+                        {endDate} 
                     </p> 
                     }
-                    {this.state.currentlyEnrolled && 
+                    {enrolled && 
                     <p> 
-                        {this.state.startDate} 
+                        {startDate} 
                         - Current 
                     </p> 
                     }
                 </div>
-                    {this.state.currentlyEnrolled} 
-                <button onClick={this.setSubmit}>Edit</button>
+                    {enrolled} 
+                <button onClick={upDateSubmit}>Edit</button>
             </div>
 
         )
     }
 
-    createEducation = () =>{
-        const {school, program,startDate,endDate, currentlyEnrolled} = this.state
+    const createEducation = () =>{
 
         return(
-            <form key={'thisisapassword'}onSubmit={this.setSubmit}>
+            <form key={'thisisapassword'}onSubmit={upDateSubmit}>
                 <label>
                     School: 
                     <input
@@ -74,7 +77,7 @@ class Education extends Component{
                         type={"text"}
                         name='school'
                         required
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     ></input>
                 </label>
 
@@ -85,7 +88,7 @@ class Education extends Component{
                         type={"text"}
                         name='program'
                         required
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     ></input>
                 </label>
                 <label>
@@ -95,10 +98,10 @@ class Education extends Component{
                         type={"date"}
                         name='startDate'
                         required
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     ></input>
                 </label>
-                {!currentlyEnrolled &&
+                {!enrolled &&
                 
                 <label>
                     End Date: 
@@ -106,7 +109,7 @@ class Education extends Component{
                         value={endDate}
                         type={"date"}
                         name='endDate'
-                        onChange={this.handleChange}
+                        onChange={handleChange}
                     >
 
                     </input>
@@ -119,7 +122,7 @@ class Education extends Component{
                 key={'thisistheKEYKEYKEY'}
                 name='currentlyEnrolled'
                 type="checkbox"
-                onChange={this.checkCurrentlyEnrolled}
+                onChange={checkCurrentlyEnrolled}
                 >
                 </input>
                 </label>
@@ -129,13 +132,12 @@ class Education extends Component{
         )
 
     }
-
-    render(){
-        let disp 
-        if(this.state.hasSubmited){
-            disp = this.createCV()
+    
+    let disp 
+        if(submit){
+            disp = createCV()
         }else{
-            disp = this.createEducation()
+            disp = createEducation()
         }
 
         return(
@@ -144,7 +146,7 @@ class Education extends Component{
             {disp}
 
         </div>
-        )};
-}
+        )
+};
 
 export default Education

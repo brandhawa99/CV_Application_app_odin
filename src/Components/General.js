@@ -1,71 +1,74 @@
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import CompHeader from './CompHeader';
 
 
-class General extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            firstName:'',
-            lastName:'',
-            email:'',
-            phoneNumber:'',
+const General = (props) =>  {
 
-            hasSubmitted: false,
-    
-        }
-    }
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
+    const [submit, setSubmit] = useState(false);
 
-    setSubmitted = (e) =>{
+    const setSubmitted = (e) =>{
         e.preventDefault();
-        this.setState({hasSubmitted: !this.state.hasSubmitted})
+        setSubmit(!submit)
     }
 
-    handleChange = (e) =>{
+    const handleChange = (e) =>{
         e.preventDefault();
         let value = e.target.name
-        this.setState({
-            [value] : e.target.value           
-            
-        })  
+
+        if(value === 'firstName'){
+            setFirstName(e.target.value)
+        }
+        if(value === 'lastName'){
+            setLastName(e.target.value)
+        }
+        if(value === 'email'){
+            setEmail(e.target.value)
+        }
+        if(value === 'phoneNumber'){
+            setPhoneNumber(e.target.value)
+        }
+
     }
 
-    renderCV = () =>{
+    const renderCV = () =>{
         return(<div>
             <h1>
-                {this.state.firstName} {this.state.lastName}
+                {firstName} {lastName}
             </h1>
-            <h3>{this.state.email}</h3>
-            <h3>{this.state.phoneNumber}</h3>
-            <button onClick={this.setSubmitted}>Edit</button>
+            <h3>{email}</h3>
+            <h3>{phoneNumber}</h3>
+            <button onClick={setSubmitted}>Edit</button>
         </div>
             )
     }
 
-    createCV =() =>{
-        const {firstName,lastName,email,phoneNumber} = this.state
+    const createCV =() =>{
         return(
 
-    <form className='general-form' onSubmit={this.setSubmitted}>
+    <form className='general-form' onSubmit={setSubmitted}>
         <label>First Name
         <input 
             value={firstName}
             type={'text'}
             name='firstName' 
-            onChange={this.handleChange}
+            onChange={handleChange}
             required>
             </input>
         </label>
 
         <label>Last Name
-        <input onChange={this.handleChange} value={lastName}type={'text'}name='lastName' required></input>
+        <input onChange={handleChange} value={lastName}type={'text'}name='lastName' required></input>
         </label>
         <label>Email
-        <input onChange={this.handleChange}value={email}type={'email'}name='email' required></input>
+        <input onChange={handleChange}value={email}type={'email'}name='email' required></input>
         </label>
 
         <label>Phone #
-        <input onChange={this.handleChange} value={phoneNumber}type={'tel'}name='phoneNumber' required></input>
+        <input onChange={handleChange} value={phoneNumber}type={'tel'}name='phoneNumber' required></input>
         </label>
         
         <button type='submit'>Submit</button>
@@ -73,14 +76,12 @@ class General extends Component {
                 )
 
     }
-    
-    render(){
         let disp
 
-        if(this.state.hasSubmitted){
-            disp = this.renderCV()
+        if(submit){
+            disp = renderCV()
         }else{
-            disp = this.createCV()
+            disp = createCV()
         }
 
         return(
@@ -91,7 +92,6 @@ class General extends Component {
 
             </div>
         )
-    }
 }
 
 

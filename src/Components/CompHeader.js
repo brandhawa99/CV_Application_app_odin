@@ -1,14 +1,12 @@
-import React ,{Component} from 'react'
+import React  from 'react'
 
-class CompHeader extends Component{
+const CompHeader= (props) =>{
 
-    render(){
         return(
             <div>
-                <h1>{this.props.title}</h1>
+                <h1>{props.title}</h1>
             </div>
         )
-    }
 }
 
 export default CompHeader;
