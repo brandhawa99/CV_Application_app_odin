@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Component, useState } from 'react';
 import CompHeader from './CompHeader';
 import uniqid from 'uniqid'
 
@@ -6,9 +6,9 @@ import uniqid from 'uniqid'
 /**
  * Manages the Experices section of the resume 
  */
-const  Experience = () => {
-    const [experiences, setExperiences] = useState([])
+const Experience = (props) => {
 
+    const [Experiences , setExperiences] = useState([]); 
     /**
      * change the correct element of the correct experience
      * @param {event} e 
@@ -17,13 +17,14 @@ const  Experience = () => {
         e.preventDefault()
         let name = (e.target.name)
         let id = (e.target.id);
-        let fixed  = experiences.forEach(experience =>{
+        let experiences = Experiences
+        experiences.forEach(experience =>{
             if(experience[name].id === id){
                 experience[name].text = e.target.value;
             }
         })
 
-        setExperiences(fixed);
+        setExperiences(experiences);
     }
 
     /**
@@ -31,7 +32,6 @@ const  Experience = () => {
      */
     const addExperience = (e) =>{
         e.preventDefault();
-
         const newExperience =      {
             id:uniqid(),
             company :{text:'',id:uniqid()},
@@ -42,15 +42,13 @@ const  Experience = () => {
             current:{text:'',id:uniqid()},
             submitted: false,
         }
-
-
-        setExperiences([...experiences,newExperience]);
+        setExperiences([...Experiences, newExperience]);
     }
 
     const setSubmit = (e) =>{
 
         e.preventDefault();
-        let filtered = experiences.filter(experience =>{
+        let filtered = Experiences.filter(experience =>{
             if(experience.id === e.target.name){
                 experience.submitted = !experience.submitted;
                 return true;
@@ -70,7 +68,7 @@ const  Experience = () => {
     const deleteExperience = (e) =>{
         e.preventDefault();
 
-        let filtered = experiences.filter(experience =>{
+        let filtered = Experiences.filter(experience =>{
             if(experience.id === e.target.name){
                 return false; 
             }else{
@@ -79,13 +77,15 @@ const  Experience = () => {
         })
 
         setExperiences(filtered);
+
+
     }
 
     const displayExerpience = () =>{
         return(
             <div>
             {
-                experiences.map(experience =>{
+                Experiences.map(experience =>{
                     if(experience.submitted === false){
                         return(
                             <form key={experience.id+1} name={experience.id}onSubmit={setSubmit}>

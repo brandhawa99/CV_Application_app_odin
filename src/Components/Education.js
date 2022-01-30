@@ -1,41 +1,40 @@
-import React, { useState} from 'react';
+import React, {useState } from 'react';
 import CompHeader from '../Components/CompHeader'
 
 
-const  Education = (props) =>{
-    const [school, setSchool] = useState('')
-    const [program, setProgram] = useState('')
-    const [startDate, setStartDate] = useState('')
+const Education = (props) =>{
+    const [school , setSchool] = useState(''); 
+    const [program, setProgram] = useState(''); 
+    const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('')
-    const [enrolled, setEnrolled] = useState(false)
-    const [submit, setSubmit] = useState(false)
+    const [currentlyEnrolled, setCurrentlyEnrolled] = useState(false);
+    const [hasSubmited, setHasSubmitted] = useState(false);
 
     const handleChange = (e) =>{
         e.preventDefault();
         let value = e.target.name; 
 
-        if(value === 'school'){
-            setSchool(e.target.value)
+        if(value === "school"){
+            setSchool(e.target.value);
         }
-        if(value === 'program'){
-            setProgram(e.target.value)
+        if(value === "program"){
+            setProgram(e.target.value);
         }
-        if(value === 'startDate'){
-            setStartDate(e.target.value)
+        if(value === "startDate"){
+            setStartDate(e.target.value);
         }
-        if(value === 'endDate'){
-            setEndDate(e.target.value)
+        if(value === "endDate"){
+            setEndDate(e.target.value);
         }
     }
 
     const checkCurrentlyEnrolled = (e) =>{
-        e.preventDefault();
-        setEnrolled(!e.target.checked)
+        setCurrentlyEnrolled(e.target.checked)
     }
 
-    const upDateSubmit = (e) =>{
+    const setSubmit = (e) =>{
         e.preventDefault();
-        setSubmit(!submit);
+        setHasSubmitted(!hasSubmited)
     }
     const createCV = () =>{
         return (
@@ -46,21 +45,20 @@ const  Education = (props) =>{
                         {program}
                     </strong>
                     
-                    {!enrolled && 
+                    {!currentlyEnrolled && 
                     <p> 
                         {startDate} --
                         {endDate} 
                     </p> 
                     }
-                    {enrolled && 
+                    {currentlyEnrolled && 
                     <p> 
                         {startDate} 
                         - Current 
                     </p> 
                     }
                 </div>
-                    {enrolled} 
-                <button onClick={upDateSubmit}>Edit</button>
+                <button onClick={setSubmit}>Edit</button>
             </div>
 
         )
@@ -69,7 +67,7 @@ const  Education = (props) =>{
     const createEducation = () =>{
 
         return(
-            <form key={'thisisapassword'}onSubmit={upDateSubmit}>
+            <form key={'thisisapassword'}onSubmit={setSubmit}>
                 <label>
                     School: 
                     <input
@@ -101,7 +99,7 @@ const  Education = (props) =>{
                         onChange={handleChange}
                     ></input>
                 </label>
-                {!enrolled &&
+                {!currentlyEnrolled &&
                 
                 <label>
                     End Date: 
@@ -132,9 +130,9 @@ const  Education = (props) =>{
         )
 
     }
-    
-    let disp 
-        if(submit){
+
+        let disp 
+        if(hasSubmited){
             disp = createCV()
         }else{
             disp = createEducation()
@@ -146,7 +144,7 @@ const  Education = (props) =>{
             {disp}
 
         </div>
-        )
-};
+        );
+}
 
 export default Education
